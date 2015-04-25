@@ -34,10 +34,10 @@ angular.module('doorphone.controllers', ['ngCordova'])
 })
 
 .controller('PlaylistsCtrl', function($scope, $cordovaFlashlight, $cordovaMedia) {
-  var src = "myrecording.mp3";
 
   $scope.isRecording = false;
-  
+  var mediaSource, media;
+
   $scope.flashOn = function() {
     $cordovaFlashlight.toggle()
       .then(function(success) { /* success */ },
@@ -50,12 +50,16 @@ angular.module('doorphone.controllers', ['ngCordova'])
   };
 
   $scope.startRecording = function() {
-  var media = new Media(src, null, null, null);
+
     if (!$scope.isRecording) {
-      media.startRecord();
       $scope.isRecording = true;
+      var mediaSrc = "/sdcard/test.wav";
+      mediaSource = $cordovaMedia.newMedia(mediaSrc);
+      media = mediaSource.media;
+      mediaSource.startRecord(media);
     } else {
-      media.stopRecord();
+      $scope.isRecording = false;
+      mediaSource.stopRecord();
     }
   };
 
