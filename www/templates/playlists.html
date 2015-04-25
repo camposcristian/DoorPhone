@@ -1,9 +1,16 @@
-<ion-view view-title="Playlists">
+<ion-view view-title="Funciones">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list>
+<button class="button button-block button-balanced" ng-click="flashOn()">
+Prender Linterna
+</button>
+<button class="button button-block button-dark" ng-click="flashOff()">
+Apagar Linterna
+</button>
+<button class="button button-block button-assertive" ng-click="record()" ng-hide="isRecording">
+Grabar
+</button>
+<button class="button button-block button-assertive" ng-click="record()" ng-show="isRecording">
+Parar
+</button>
   </ion-content>
 </ion-view>

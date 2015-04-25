@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('doorphone.controllers', ['ngCordova'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
@@ -33,16 +33,32 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PlaylistsCtrl', function($scope, $cordovaFlashlight, $cordovaMedia) {
+  var src = "myrecording.mp3";
+
+  $scope.isRecording = false;
+  
+  $scope.flashOn = function() {
+    $cordovaFlashlight.toggle()
+      .then(function(success) { /* success */ },
+        function(error) { /* error */ });
+  };
+  $scope.flashOff = function() {
+    $cordovaFlashlight.toggle()
+      .then(function(success) { /* success */ },
+        function(error) { /* error */ });
+  };
+
+  $scope.startRecording = function() {
+  var media = new Media(src, null, null, null);
+    if (!$scope.isRecording) {
+      media.startRecord();
+      $scope.isRecording = true;
+    } else {
+      media.stopRecord();
+    }
+  };
+
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+.controller('PlaylistCtrl', function($scope, $stateParams) {});
